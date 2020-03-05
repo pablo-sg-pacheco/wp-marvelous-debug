@@ -1,0 +1,357 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "5ce831af45cc1d8fc28c5b402d1e0780",
+    "packages": [
+        {
+            "name": "composer/installers",
+            "version": "v1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/composer/installers.git",
+                "reference": "7d610d50aae61ae7ed6675e58efeabdf279bb5e3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/composer/installers/zipball/7d610d50aae61ae7ed6675e58efeabdf279bb5e3",
+                "reference": "7d610d50aae61ae7ed6675e58efeabdf279bb5e3",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0"
+            },
+            "replace": {
+                "roundcube/plugin-installer": "*",
+                "shama/baton": "*"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.*@dev",
+                "phpunit/phpunit": "^4.8.36"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "Composer\\Installers\\Plugin",
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Composer\\Installers\\": "src/Composer/Installers"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kyle Robinson Young",
+                    "email": "kyle@dontkry.com",
+                    "homepage": "https://github.com/shama"
+                }
+            ],
+            "description": "A multi-framework Composer library installer",
+            "homepage": "https://composer.github.io/installers/",
+            "keywords": [
+                "Craft",
+                "Dolibarr",
+                "Eliasis",
+                "Hurad",
+                "ImageCMS",
+                "Kanboard",
+                "Lan Management System",
+                "MODX Evo",
+                "MantisBT",
+                "Mautic",
+                "Maya",
+                "OXID",
+                "Plentymarkets",
+                "Porto",
+                "RadPHP",
+                "SMF",
+                "Thelia",
+                "Whmcs",
+                "WolfCMS",
+                "agl",
+                "aimeos",
+                "annotatecms",
+                "attogram",
+                "bitrix",
+                "cakephp",
+                "chef",
+                "cockpit",
+                "codeigniter",
+                "concrete5",
+                "croogo",
+                "dokuwiki",
+                "drupal",
+                "eZ Platform",
+                "elgg",
+                "expressionengine",
+                "fuelphp",
+                "grav",
+                "installer",
+                "itop",
+                "joomla",
+                "known",
+                "kohana",
+                "laravel",
+                "lavalite",
+                "lithium",
+                "magento",
+                "majima",
+                "mako",
+                "mediawiki",
+                "modulework",
+                "modx",
+                "moodle",
+                "osclass",
+                "phpbb",
+                "piwik",
+                "ppi",
+                "puppet",
+                "pxcms",
+                "reindex",
+                "roundcube",
+                "shopware",
+                "silverstripe",
+                "sydes",
+                "sylius",
+                "symfony",
+                "typo3",
+                "wordpress",
+                "yawik",
+                "zend",
+                "zikula"
+            ],
+            "time": "2020-02-07T10:39:20+00:00"
+        },
+        {
+            "name": "psr/container",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/container.git",
+                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
+                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common Container Interface (PHP FIG PSR-11)",
+            "homepage": "https://github.com/php-fig/container",
+            "keywords": [
+                "PSR-11",
+                "container",
+                "container-interface",
+                "container-interop",
+                "psr"
+            ],
+            "time": "2017-02-14T16:28:37+00:00"
+        },
+        {
+            "name": "tareq1988/wordpress-settings-api-class",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tareq1988/wordpress-settings-api-class.git",
+                "reference": "243544eeb83be10e629dd89eb487b96e4170ed57"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tareq1988/wordpress-settings-api-class/zipball/243544eeb83be10e629dd89eb487b96e4170ed57",
+                "reference": "243544eeb83be10e629dd89eb487b96e4170ed57",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPLv2"
+            ],
+            "authors": [
+                {
+                    "name": "Tareq Hasan",
+                    "email": "tareq@wedevs.com",
+                    "homepage": "http://tareq.wedevs.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "WordPress settings API Abstraction Class",
+            "homepage": "https://github.com/tareq1988/wordpress-settings-api-class",
+            "keywords": [
+                "settings-api",
+                "wordpress",
+                "wp"
+            ],
+            "time": "2018-05-01T19:33:47+00:00"
+        },
+        {
+            "name": "thanks-to-it/wp-dich",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thanks-to-it/wp-dich.git",
+                "reference": "02d12dd6d622eaee9a76c2376c3dedf33f7f2fb9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thanks-to-it/wp-dich/zipball/02d12dd6d622eaee9a76c2376c3dedf33f7f2fb9",
+                "reference": "02d12dd6d622eaee9a76c2376c3dedf33f7f2fb9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0",
+                "psr/container": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2020-02-06T16:33:08+00:00"
+        },
+        {
+            "name": "thanks-to-it/wp-settings-api",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thanks-to-it/wp-settings-api.git",
+                "reference": "40e5fd963387dc4fd6154e633bae2fd1ac043e98"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thanks-to-it/wp-settings-api/zipball/40e5fd963387dc4fd6154e633bae2fd1ac043e98",
+                "reference": "40e5fd963387dc4fd6154e633bae2fd1ac043e98",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4",
+                "tareq1988/wordpress-settings-api-class": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "license": [
+                "GPLv2"
+            ],
+            "authors": [
+                {
+                    "name": "Pablo Pacheco",
+                    "email": "pablo.sg.pacheco@gmail.com",
+                    "role": "WordPress Developer"
+                }
+            ],
+            "description": "tareq1988/wordpress-settings-api-class Override",
+            "homepage": "https://github.com/thanks-to-it/wp-settings-api",
+            "keywords": [
+                "settings-api",
+                "wordpress",
+                "wp"
+            ],
+            "support": {
+                "source": "https://github.com/thanks-to-it/wp-settings-api/tree/master",
+                "issues": "https://github.com/thanks-to-it/wp-settings-api/issues"
+            },
+            "time": "2020-03-01T18:43:15+00:00"
+        },
+        {
+            "name": "wp-cli/wp-config-transformer",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wp-cli/wp-config-transformer.git",
+                "reference": "1ca98343443a8e4585865db5f50e8e6121fee70b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wp-cli/wp-config-transformer/zipball/1ca98343443a8e4585865db5f50e8e6121fee70b",
+                "reference": "1ca98343443a8e4585865db5f50e8e6121fee70b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.29"
+            },
+            "require-dev": {
+                "composer/composer": "^1.5.6",
+                "phpunit/phpunit": "^6.5.5",
+                "wp-coding-standards/wpcs": "^0.14.0 || ^1.0.0 || ^2.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/WPConfigTransformer.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frankie Jarrett",
+                    "email": "fjarrett@gmail.com"
+                }
+            ],
+            "description": "Programmatically edit a wp-config.php file.",
+            "time": "2019-07-23T17:24:43+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "thanks-to-it/wp-settings-api": 20,
+        "tareq1988/wordpress-settings-api-class": 20,
+        "thanks-to-it/wp-dich": 20,
+        "wp-cli/wp-config-transformer": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=5.6.0"
+    },
+    "platform-dev": []
+}

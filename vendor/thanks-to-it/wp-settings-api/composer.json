@@ -1,0 +1,22 @@
+{
+    "name": "thanks-to-it/wp-settings-api",
+    "type": "library",
+    "description": "tareq1988/wordpress-settings-api-class Override",
+    "keywords": ["wp","wordpress", "settings-api"],
+    "homepage": "https://github.com/thanks-to-it/wp-settings-api",
+    "license": "GPLv2",
+    "authors": [
+        {
+            "name": "Pablo Pacheco",
+            "email": "pablo.sg.pacheco@gmail.com",            
+            "role": "WordPress Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.2.4",
+        "tareq1988/wordpress-settings-api-class": "dev-master"
+    },
+    "autoload": {
+        "classmap": ["src/"]
+    }
+}

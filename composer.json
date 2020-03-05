@@ -1,0 +1,44 @@
+{
+  "name": "thanks-to-it/wp-debug-console",
+  "type": "wordpress-plugin",
+  "description": "View WordPress debug.log on your browser's console",
+  "keywords": [
+    "wordpress",
+    "debug",
+    "console"
+  ],
+  "license": "MIT",
+  "authors": [{
+    "name": "Pablo Pacheco",
+    "email": "pablo.sg.pacheco@gmail.com"
+  }],
+  "config": {
+    "preferred-install": "dist",
+    "optimize-autoloader": true
+  },
+  "repositories": [{
+    "type": "vcs",
+    "url": "https://github.com/thanks-to-it/wp-settings-api"
+  }],
+  "require": {
+    "php": ">=5.6.0",
+    "composer/installers": ">=v1.2.0",
+    "thanks-to-it/wp-settings-api": "dev-master",
+    "tareq1988/wordpress-settings-api-class": "dev-master",
+    "thanks-to-it/wp-dich": "dev-master",
+    "wp-cli/wp-config-transformer":"dev-master"
+  },
+  "extra": {
+    "installer-paths": {
+      "vendor/{$vendor}/{$name}": [
+        "type:wordpress-plugin",
+        "type:wordpress-muplugin"
+      ]
+    }
+  },
+  "autoload": {
+    "classmap": [
+      "src/php/"
+    ]
+  }
+}
