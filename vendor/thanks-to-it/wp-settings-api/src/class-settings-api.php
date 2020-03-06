@@ -138,13 +138,15 @@ if ( ! class_exists( 'ThanksToIT\WP_Settings_API\Settings_API' ) ) {
 
 			?>
             </table>
-            <h2><?php echo esc_html( $subection ) ?></h2>
+            <h2><?php echo wp_kses_post( $subection ) ?></h2>
 			<?php if ( ! empty( $desc ) ): ?>
-                <p><?php echo esc_html( $desc ); ?></p>
+                <p><?php echo wp_kses_post( $desc ); ?></p>
 			<?php endif; ?>
             <table class="form-table">
                 <tbody>
 			<?php
 		}
+
+
 	}
 }

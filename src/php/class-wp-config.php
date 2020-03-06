@@ -68,6 +68,20 @@ if ( ! class_exists( 'ThanksToIT\WPMD\WP_Config' ) ) {
 		}
 
 		/**
+		 * is_wp_config_writable.
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @return mixed
+		 */
+		function is_wp_config_writable() {
+			WP_Filesystem();
+			global $wp_filesystem;
+			return $wp_filesystem->is_writable( $this->get_wp_config_file() );
+		}
+
+		/**
 		 * get_variable_value.
 		 *
 		 * @version 1.0.0
@@ -80,6 +94,9 @@ if ( ! class_exists( 'ThanksToIT\WPMD\WP_Config' ) ) {
 		 * @throws \Exception
 		 */
 		function get_variable_value( $var_name, $default = false ) {
+			if ( ! $this->is_wp_config_writable() ) {
+				return false;
+			}
 			$config_transformer = new \WPConfigTransformer( $this->get_wp_config_file() );
 			if ( ! $config_transformer->exists( 'constant', $var_name ) ) {
 				return $default;
@@ -88,6 +105,16 @@ if ( ! class_exists( 'ThanksToIT\WPMD\WP_Config' ) ) {
 			}
 		}
 
+		/**
+		 * maybe_bool_to_string.
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param $value
+		 *
+		 * @return string
+		 */
 		function maybe_bool_to_string( $value ) {
 			if ( ! is_string( $value ) ) {
 				if ( filter_var( $value, FILTER_VALIDATE_BOOLEAN ) ) {
@@ -99,7 +126,22 @@ if ( ! class_exists( 'ThanksToIT\WPMD\WP_Config' ) ) {
 			return $value;
 		}
 
+		/**
+		 * update_variable.
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @param $var_name
+		 * @param $value
+		 *
+		 * @return bool
+		 * @throws \Exception
+		 */
 		function update_variable( $var_name, $value ) {
+			if ( ! $this->is_wp_config_writable() ) {
+				return false;
+			}
 			$config_transformer = new \WPConfigTransformer( $this->get_wp_config_file() );
 			return $config_transformer->update( 'constant', $var_name, $this->maybe_bool_to_string( $value ), $config_args = [
 				'raw'       => true,
