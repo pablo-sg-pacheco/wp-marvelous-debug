@@ -46,6 +46,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 			add_action( 'admin_notices', array( $this, 'show_invalid_log_notice' ) );
 			add_action( 'admin_notices', array( $this, 'show_invalid_wp_config_notice' ) );
 			add_action( 'admin_head', array( $this, 'handle_css' ) );
+			add_action( 'admin_head', array( $this, 'handle_js' ) );
 			add_filter( 'wpmd_settings_fields_general', array( $this, 'control_log_content_display' ) );
 			add_filter( 'wpmd_settings_fields_general', array( $this, 'control_log_settings_display' ) );
 			add_filter( 'wpmd_settings_fields_general', array( $this, 'control_wp_config_settings_display' ) );
@@ -305,6 +306,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 					),
 					array(
 						'name'              => 'wp_debug',
+						'class'             => 'padding-v1',
 						'tag'               => 'wp-config-constant',
 						'label'             => __( 'WP_DEBUG', 'wp-marvelous-debug' ),
 						'default'           => $this->get_options()->bool_to_string( $this->get_wp_config()->get_variable_value( 'WP_DEBUG' ) ),
@@ -317,6 +319,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 					),
 					array(
 						'name'              => 'wp_debug_log',
+						'class'             => 'padding-v1',
 						'tag'               => 'wp-config-constant',
 						'label'             => __( 'WP_DEBUG_LOG', 'wp-marvelous-debug' ),
 						'default'           => $this->get_options()->bool_to_string( $this->get_wp_config()->get_variable_value( 'WP_DEBUG_LOG' ) ),
@@ -329,6 +332,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 					),
 					array(
 						'name'              => 'wp_debug_display',
+						'class'             => 'padding-v1',
 						'tag'               => 'wp-config-constant',
 						'label'             => __( 'WP_DEBUG_DISPLAY', 'wp-marvelous-debug' ),
 						'default'           => $this->get_options()->bool_to_string( $this->get_wp_config()->get_variable_value( 'WP_DEBUG_DISPLAY' ) ),
@@ -341,6 +345,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 					),
 					array(
 						'name'              => 'script_debug',
+						'class'             => 'padding-v1',
 						'tag'               => 'wp-config-constant',
 						'label'             => __( 'SCRIPT_DEBUG', 'wp-marvelous-debug' ),
 						'default'           => $this->get_options()->bool_to_string( $this->get_wp_config()->get_variable_value( 'SCRIPT_DEBUG' ) ),
@@ -353,6 +358,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 					),
 					array(
 						'name'              => 'savequeries',
+						'class'             => 'padding-v1',
 						'tag'               => 'wp-config-constant',
 						'label'             => __( 'SAVEQUERIES', 'wp-marvelous-debug' ),
 						'default'           => $this->get_options()->bool_to_string( $this->get_wp_config()->get_variable_value( 'SAVEQUERIES' ) ),
@@ -488,6 +494,31 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 			return $pages_options;
 		}
 
+		function handle_js() {
+			global $pagenow;
+			if (
+				'options-general.php' != $pagenow ||
+				! isset( $_GET['page'] ) ||
+				'wpmd_settings' != $_GET['page']
+			) {
+				return;
+			}
+			?>
+			<script>
+				<?php if ( ! $this->get_wp_config()->is_wp_config_path_valid() || ! $this->get_wp_config()->is_wp_config_writable()) { ?>
+				jQuery(document).ready(function () {
+					jQuery('.wp_config_path').addClass('invalid-input');
+				})
+				<?php } ?>
+				<?php if ( ! $this->get_debug_log()->is_log_file_valid()) { ?>
+				jQuery(document).ready(function () {
+					jQuery('.log_file').addClass('invalid-input');
+				})
+				<?php } ?>
+			</script>
+			<?php
+		}
+
 		/**
 		 * handle_css.
 		 *
@@ -509,6 +540,33 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 				.wpmd-log-content textarea {
 					width: 99%;
 				}
+				.padding-v1 th{
+					padding-top:15px;
+					padding-bottom:15px;
+				}
+				.padding-v1 td{
+					padding-top:10px;
+					padding-bottom:10px;
+				}
+				.form-table th label{
+					display:inline-block;
+					vertical-align: top;
+				}
+				.invalid-input input[type="text"]{
+					border:1px solid red;
+				}
+				/*.wp_config_path th:after{
+					content: "\f147";
+					font-family: dashicons;
+					color:green;
+					font-size:35px;
+					display:inline-block;
+					vertical-align: top;
+					position:relative;
+					top:-15px;
+					font-weight:100;
+					margin: 0 3px -20px 0px;
+				}*/
 			</style>
 			<?php
 		}
