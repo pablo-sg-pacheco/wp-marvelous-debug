@@ -361,7 +361,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 						'name'              => 'ignore_last_line',
 						'tag'               => 'debug.log-setting',
 						'label'             => __( 'Ignore Last Line', 'wp-marvelous-debug' ),
-						'desc'              => __( 'Enable', 'wp-marvelous-debug' ) . '<p class="description">' . __( 'Ignore last line from log file as almost always it is an empty line.', 'wp-marvelous-debug' ) . '</p>',
+						'desc'              => __( 'Enable', 'wp-marvelous-debug' ) . '<p class="description">' . __( 'Ignores last line from log file as almost always it is an empty line.', 'wp-marvelous-debug' ) . '</p>',
 						//'placeholder'       => __( 'Text Input placeholder', 'wp-marvelous-debug' ),
 						'type'              => 'checkbox',
 						'default'           => 'on',
