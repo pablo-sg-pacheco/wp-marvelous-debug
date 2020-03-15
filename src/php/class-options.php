@@ -31,7 +31,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Options' ) ) {
 		 *
 		 * @return string
 		 */
-		function get_option( $option, $section, $default = '' ) {
+		function get_option( $option, $section = 'wpmd_general', $default = '' ) {
 
 			if ( empty( $this->section ) ) {
 				$options = get_option( $section );

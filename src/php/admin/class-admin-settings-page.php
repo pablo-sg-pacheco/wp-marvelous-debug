@@ -7,22 +7,22 @@
  * @author  Thanks to IT
  */
 
-namespace ThanksToIT\WPMD\Admin_Settings;
+namespace ThanksToIT\WPMD\Admin;
 
 use ThanksToIT\WP_Settings_API\Settings_API;
-use ThanksToIT\WPMD\Debug_Log;
+use ThanksToIT\WPMD\Log_File;
 use ThanksToIT\WPMD\Options;
 use ThanksToIT\WPMD\WP_Config;
 
-if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
+if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 	class Admin_Settings_Page {
 
 		private $settings_api;
 
 		/**
-		 * @var Debug_Log
+		 * @var Log_File
 		 */
-		private $debug_log;
+		private $log_file;
 
 		/**
 		 * @var WP_Config
@@ -47,8 +47,6 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 			add_action( 'admin_notices', array( $this, 'show_invalid_wp_config_notice' ) );
 			add_action( 'admin_head', array( $this, 'handle_css' ) );
 			add_action( 'admin_head', array( $this, 'handle_js' ) );
-			add_filter( 'wpmd_settings_fields_general', array( $this, 'control_log_content_display' ) );
-			add_filter( 'wpmd_settings_fields_general', array( $this, 'control_log_settings_display' ) );
 			add_filter( 'wpmd_settings_fields_general', array( $this, 'control_wp_config_settings_display' ) );
 		}
 
@@ -92,7 +90,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 				'options-general.php' != $pagenow ||
 				! isset( $_GET['page'] ) ||
 				'wpmd_settings' != $_GET['page'] ||
-				$this->get_debug_log()->is_log_file_valid()
+				$this->get_log_file()->is_log_file_valid()
 			) {
 				return;
 			}
@@ -147,54 +145,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 		 * @since   1.0.0
 		 */
 		function admin_menu() {
-			add_options_page( 'WP Marvelous Debug', 'WP Marvelous Debug', 'delete_posts', 'wpmd_settings', array( $this, 'plugin_page' ) );
-		}
-
-		/**
-		 * control_log_content_display.
-		 *
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 *
-		 * @param $settings
-		 *
-		 * @return mixed
-		 */
-		function control_log_content_display( $settings ) {
-			if (
-				! $this->get_debug_log()->is_log_file_valid() ||
-				'on' !== $this->get_options()->get_option( 'log_content_view', 'wpmd_general', 'no' )
-			) {
-				$settings = $this->remove_field_by_name( $settings, 'log_content' );
-			}
-			return $settings;
-		}
-
-		/**
-		 * control_log_settings_display.
-		 *
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 *
-		 * @param $settings
-		 *
-		 * @return mixed
-		 */
-		function control_log_settings_display( $settings ) {
-			if ( ! $this->get_debug_log()->is_log_file_valid() ) {
-				$settings = $this->remove_field_by_tag( $settings, 'debug.log' );
-			}
-
-			if (
-				! $this->get_wp_config()->is_wp_config_writable() ||
-				! in_array( strtolower( (string) WP_DEBUG_LOG ), array( 'true', '1' ), true ) ||
-				! in_array( strtolower( (string) WP_DEBUG ), array( 'true', '1' ), true )
-			) {
-				$settings = $this->remove_field_by_tag( $settings, 'debug.log' );
-				$settings = $this->remove_field_by_tag( $settings, 'debug.log-setting' );
-			}
-
-			return $settings;
+			add_options_page( __( 'WP Marvelous Debug', 'wp-marvelous-debug' ), __( 'WP Marvelous Debug', 'wp-marvelous-debug' ), 'delete_posts', 'wpmd_settings', array( $this, 'plugin_page' ) );
 		}
 
 		/**
@@ -269,6 +220,10 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 					'id'    => 'wpmd_general',
 					'title' => __( 'General Settings', 'wp-marvelous-debug' )
 				),
+				array(
+					'id'    => 'wpmd_log',
+					'title' => __( 'Log Settings', 'wp-marvelous-debug' )
+				),
 			);
 			return $sections;
 		}
@@ -298,10 +253,24 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 						'sanitize_callback' => 'sanitize_text_field'
 					),
 					array(
+						'name'              => 'enable_debug_on_plugin_activation',
+						'label'             => __( 'Enable Debug on Activation', 'wp-marvelous-debug' ),
+						'default'           => 'on',
+						'desc'              => __( 'Enable', 'wp-marvelous-debug' ). '<p class="description">' . __( 'Tries to enable WP_DEBUG and WP_DEBUG_LOG and disable WP_DEBUG_DISPLAY when WP Marvelous Debug plugin is enabled.', 'wp-marvelous-debug' ) . '</p>',
+						'type'              => 'checkbox'
+					),
+					array(
+						'name'              => 'disable_debug_on_plugin_deactivation',
+						'label'             => __( 'Disable Debug on Deactivation', 'wp-marvelous-debug' ),
+						'default'           => 'on',
+						'desc'              => __( 'Enable', 'wp-marvelous-debug' ). '<p class="description">' . __( 'Tries to disable WP_DEBUG and WP_DEBUG_LOG and enable WP_DEBUG_DISPLAY when WP Marvelous Debug plugin is disabled.', 'wp-marvelous-debug' ) . '</p>',
+						'type'              => 'checkbox'
+					),
+					array(
 						'name'  => 'wp_config_constants_subsection',
 						'tag'   => 'wp-config-constant',
 						'label' => __( 'WP Config Constants', 'wp-marvelous-debug' ),
-						'desc'  => sprintf( __( 'WP Config constants regarding <a href="%s" target="_blank">debugging</a>.', 'wp-marvelous-debug' ), 'https://wordpress.org/support/article/debugging-in-wordpress/' ) . '<br />' . __( 'It\'s necessary to enable at least the <strong>WP_DEBUG</strong> and <strong>WP_DEBUG_LOG</strong> constants to see the rest of the logging options.', 'wp-marvelous-debug' ),
+						'desc'  => sprintf( __( 'WP Config constants regarding <a href="%s" target="_blank">debugging</a>.', 'wp-marvelous-debug' ), 'https://wordpress.org/support/article/debugging-in-wordpress/' ) . '<br />' . __( 'It\'s necessary to enable at least the <strong>WP_DEBUG</strong> and <strong>WP_DEBUG_LOG</strong> constants to generate the log file.', 'wp-marvelous-debug' ),
 						'type'  => 'subsection'
 					),
 					array(
@@ -369,91 +338,81 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 						},
 						'type'              => 'checkbox'
 					),
+				),
+				'wpmd_log' => array(
 					array(
 						'name'  => 'logs_subsection',
 						'tag'   => 'debug.log-setting',
 						'label' => __( 'Log Settings', 'wp-marvelous-debug' ),
-						'desc'  => __( 'Log settings.', 'wp-marvelous-debug' ),
+						'desc'  => sprintf( __( 'Log settings that will be used to display the <a href="%s">log file</a>.', 'wp-marvelous-debug' ), admin_url( 'tools.php?page=wpmd_log_file' ) ),
 						'type'  => 'subsection'
 					),
 					array(
 						'name'              => 'log_file',
 						'tag'               => 'debug.log-setting',
 						'label'             => __( 'Log File', 'wp-marvelous-debug' ),
-						'desc'              => __( 'Probably ', 'wp-marvelous-debug' ) . '<code>' . $this->get_debug_log()->get_default_log_file() . '</code>',
+						'desc'              => __( 'Probably ', 'wp-marvelous-debug' ) . '<code>' . $this->get_log_file()->get_default_log_file() . '</code>',
 						//'placeholder'       => __( 'Text Input placeholder', 'wp-marvelous-debug' ),
 						'type'              => 'text',
-						'default'           => $this->get_debug_log()->get_default_log_file(),
+						'default'           => $this->get_log_file()->get_default_log_file(),
 						'sanitize_callback' => 'sanitize_text_field'
 					),
 					array(
-						'name'  => 'enhanced_log_content_subsection',
-						'tag'   => 'debug.log',
-						'label' => __( 'Enhanced Log', 'wp-marvelous-debug' ),
-						'desc'  => __( 'The log with some legibility improvement or some other enhancement.', 'wp-marvelous-debug' ),
-						'type'  => 'subsection'
-					),
-					array(
-						'name'    => 'only_last_n_lines',
-						'tag'     => 'debug.log',
-						'label'   => __( 'View only last X Line(s)', 'wp-marvelous-debug' ),
-						'default' => 5,
-						//'desc'  => __( 'Enable', 'wp-marvelous-debug' ),
-						'type'    => 'number'
-					),
-					array(
-						'name'              => 'enhanced_log_content',
-						'tag'               => 'debug.log',
-						'label'             => __( 'Log Content', 'wp-marvelous-debug' ),
-						//'desc'              => __( 'Debug.log Content', 'wp-marvelous-debug' ),
+						'name'              => 'redirect_to_last_page',
+						'tag'               => 'debug.log-setting',
+						'label'             => __( 'Redirect to Last Page', 'wp-marvelous-debug' ),
+						'desc'              => __( 'Enable', 'wp-marvelous-debug' ) . '<p class="description">' . sprintf( __( 'Displays the end of the log file by default on the <a href="%s">log file page</a>.', 'wp-marvelous-debug' ), admin_url( 'tools.php?page=wpmd_log_file' ) ) . '</p>',
 						//'placeholder'       => __( 'Text Input placeholder', 'wp-marvelous-debug' ),
-						'class'             => 'wpmd-log-content',
-						'sanitize_callback' => function () {
-							return false;
-						},
-						'type'              => 'textarea',
-						'default'           => $this->get_debug_log()->get_enhanced_log_content()
-						//'sanitize_callback' => 'sanitize_text_field'
+						'type'              => 'checkbox',
+						'default'           => 'on',
+						'sanitize_callback' => 'sanitize_text_field'
 					),
 					array(
-						'name'  => 'raw_log_content_subsection',
-						'tag'   => 'debug.log',
-						'label' => __( 'Raw Log Content', 'wp-marvelous-debug' ),
-						'desc'  => __( 'The original log content without any modifications.', 'wp-marvelous-debug' ),
-						'type'  => 'subsection'
+						'name'              => 'generate_reduced_log',
+						'tag'               => 'debug.log-setting',
+						'label'             => __( 'Generate Reduced Log', 'wp-marvelous-debug' ),
+						'desc'              => __( 'Generates a <code>debug-reduced.log</code> log file on the same directory as your log file is located.', 'wp-marvelous-debug' ) . '<br />' . __( 'Remember to disable it when you are not debugging anymore.', 'wp-marvelous-debug' ),
+						'type'              => 'subsection'
 					),
 					array(
-						'name'    => 'log_content_view',
-						'tag'     => 'debug.log',
-						'label'   => __( 'View log Content', 'wp-marvelous-debug' ),
-						'default' => 'off',
-						'desc'    => __( 'Enable', 'wp-marvelous-debug' ),
-						'type'    => 'checkbox'
-					),
-					array(
-						'name'    => 'log_content_edit',
-						'tag'     => 'debug.log',
-						'label'   => __( 'Edit log Content', 'wp-marvelous-debug' ),
-						'default' => 'off',
-						'desc'    => __( 'Enable', 'wp-marvelous-debug' ),
-						'type'    => 'checkbox'
-					),
-					array(
-						'name'              => 'log_content',
-						'tag'               => 'debug.log',
-						'label'             => __( 'Log Content', 'wp-marvelous-debug' ),
-						'sanitize_callback' => function ( $content ) {
-							$this->get_debug_log()->put_log_content( $content );
-							return false;
-						},
-						//'desc'              => __( 'Debug.log Content', 'wp-marvelous-debug' ),
+						'name'              => 'generate_reduced_log_enable',
+						'tag'               => 'debug.log-setting',
+						'label'             => __( 'Enable', 'wp-marvelous-debug' ),
+						'desc'              => __( 'Enable', 'wp-marvelous-debug' ),
 						//'placeholder'       => __( 'Text Input placeholder', 'wp-marvelous-debug' ),
-						'class'             => 'wpmd-log-content',
-						'type'              => 'textarea',
-						'default'           => $this->get_debug_log()->get_log_content(),
-						//'sanitize_callback' => 'sanitize_text_field'
+						'type'              => 'checkbox',
+						'default'           => 'off',
+						'sanitize_callback' => 'sanitize_text_field'
 					),
-				),
+					array(
+						'name'              => 'last_x_log_lines',
+						'tag'               => 'debug.log',
+						'label'             => __( 'Number of Last Lines', 'wp-marvelous-debug' ),
+						'desc'              => sprintf( __( 'Gets the last %d lines from the original log file to generate the reduced log file.', 'wp-marvelous-debug' ), $this->get_options()->get_option( 'last_x_log_lines', 'wpmd_log', 50 ) ),
+						//'placeholder'     => __( 'Text Input placeholder', 'wp-marvelous-debug' ),
+						//'class'           => 'wpmd-log-content',
+						'type'              => 'number',
+						'default'           => 50
+					),
+					array(
+						'name'              => 'generate_reduced_log_on_admin',
+						'tag'               => 'debug.log-setting',
+						'label'             => __( 'Generate on Admin', 'wp-marvelous-debug' ),
+						'desc'              => __( 'Enable', 'wp-marvelous-debug' ) . '<p class="description">' . __( 'Generates the reduced log file on the dashboard.', 'wp-marvelous-debug' ) . '</p>',
+						'type'              => 'checkbox',
+						'default'           => 'on',
+						'sanitize_callback' => 'sanitize_text_field'
+					),
+					array(
+						'name'              => 'generate_reduced_log_on_frontend',
+						'tag'               => 'debug.log-setting',
+						'label'             => __( 'Generate on Frontend', 'wp-marvelous-debug' ),
+						'desc'              => __( 'Enable', 'wp-marvelous-debug' ) . '<p class="description">' . __( 'Generates the reduced log file on the frontend.', 'wp-marvelous-debug' ) . '</p>',
+						'type'              => 'checkbox',
+						'default'           => 'on',
+						'sanitize_callback' => 'sanitize_text_field'
+					),
+				)
 			);
 
 			$settings_fields = apply_filters( 'wpmd_settings_fields_general', $settings_fields );
@@ -510,7 +469,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 					jQuery('.wp_config_path').addClass('invalid-input');
 				})
 				<?php } ?>
-				<?php if ( ! $this->get_debug_log()->is_log_file_valid()) { ?>
+				<?php if ( ! $this->get_log_file()->is_log_file_valid()) { ?>
 				jQuery(document).ready(function () {
 					jQuery('.log_file').addClass('invalid-input');
 				})
@@ -540,14 +499,14 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 				.wpmd-log-content textarea {
 					width: 99%;
 				}
-				.padding-v1 th{
-					padding-top:15px;
-					padding-bottom:15px;
+				/*.padding-v1 th{
+					padding-top:12px;
+					padding-bottom:12px;
 				}
 				.padding-v1 td{
-					padding-top:10px;
-					padding-bottom:10px;
-				}
+					padding-top:7px;
+					padding-bottom:7px;
+				}*/
 				.form-table th label{
 					display:inline-block;
 					vertical-align: top;
@@ -577,10 +536,10 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 		 * @version 1.0.0
 		 * @since   1.0.0
 		 *
-		 * @return Debug_Log
+		 * @return Log_File
 		 */
-		public function get_debug_log() {
-			return $this->debug_log;
+		public function get_log_file() {
+			return $this->log_file;
 		}
 
 		/**
@@ -589,10 +548,10 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 		 * @version 1.0.0
 		 * @since   1.0.0
 		 *
-		 * @param Debug_Log $debug_log
+		 * @param Log_File $log_file
 		 */
-		public function set_debug_log( $debug_log ) {
-			$this->debug_log = $debug_log;
+		public function set_log_file( $log_file ) {
+			$this->log_file = $log_file;
 		}
 
 		/**
@@ -619,9 +578,11 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin_Settings\Admin_Settings_Page' ) ) {
 		/**
 		 * @param WP_Config $wp_config
 		 */
-		public function set_WP_Config( $wp_config ) {
+		public function set_wp_config( $wp_config ) {
 			$this->wp_config = $wp_config;
 		}
+
+
 
 
 	}

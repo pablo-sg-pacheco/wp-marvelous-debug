@@ -36,6 +36,40 @@ if ( ! class_exists( 'ThanksToIT\WPMD\WP_Config' ) ) {
 		}
 
 		/**
+		 * try_to_enable_debug_on_activation.
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @throws \Exception
+		 */
+		function try_to_enable_debug_on_activation() {
+			if ( 'on' !== $this->get_options()->get_option( 'enable_debug_on_plugin_activation', 'wpmd_general', 'on' ) ) {
+				return;
+			}
+			$this->update_variable( 'WP_DEBUG', true );
+			$this->update_variable( 'WP_DEBUG_LOG', true );
+			$this->update_variable( 'WP_DEBUG_DISPLAY', false );
+		}
+
+		/**
+		 * try_to_disable_debug_on_deactivation.
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @throws \Exception
+		 */
+		function try_to_disable_debug_on_deactivation() {
+			if ( 'on' !== $this->get_options()->get_option( 'disable_debug_on_plugin_deactivation', 'wpmd_general', 'on' ) ) {
+				return;
+			}
+			$this->update_variable( 'WP_DEBUG', false );
+			$this->update_variable( 'WP_DEBUG_LOG', false );
+			$this->update_variable( 'WP_DEBUG_DISPLAY', true );
+		}
+
+		/**
 		 * get_wp_config_file.
 		 *
 		 * @version 1.0.0
