@@ -39,7 +39,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_File_Tools_Page' ) ) {
 		 */
 		function redirect_to_last_page() {
 			if (
-				'on' !== $this->get_options()->get_option( 'redirect_to_last_page', 'wpmd_log', 'on' ) ||
+				'on' !== $this->get_options()->get_option( 'redirect_to_last_page', 'wpmd_log', 'off' ) ||
 				! function_exists( 'get_current_screen' ) ||
 				'tools_page_wpmd_log_file' !== ( $screen = get_current_screen() )->id ||
 				isset( $_GET['paged'] )
@@ -58,12 +58,14 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_File_Tools_Page' ) ) {
 		 * @since   1.0.0
 		 */
 		function add_page_content() {
-			echo '<div class="wrap">';
-			echo '<h1>' . __( 'Log File', 'remove-special-characters-from-permalinks' ) . '</h1>';
 			?>
 			<div class="wrap">
-
-
+				<h1><?php echo __( 'Log File', 'remove-special-characters-from-permalinks' ) ?></h1>
+				<?php if ( $this->get_log_file()->is_log_file_valid() ) : ?>
+					<p>
+						<?php echo __( 'Displaying ', 'remove-special-characters-from-permalinks' ) . '<code>' . $this->get_log_file()->get_log_file() . '</code>'; ?>
+					</p>
+				<?php endif; ?>
 				<div id="poststuff">
 					<div id="post-body" class="metabox-holder">
 						<div id="post-body-content">

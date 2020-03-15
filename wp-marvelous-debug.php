@@ -17,5 +17,4 @@ $core = new \ThanksToIT\WPMD\Core();
 $core->setup( array(
 	'filesystem_path' => __FILE__,
 ) );
-//error_log(random_int(1,999));
 $core->init();

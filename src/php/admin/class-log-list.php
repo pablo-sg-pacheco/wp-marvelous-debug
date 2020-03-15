@@ -54,7 +54,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 
 		/** Text displayed when no customer data is available */
 		public function no_items() {
-			_e( 'No customers avaliable.', 'wp-marvelous-debug' );
+			_e( 'No lines avaliable.', 'wp-marvelous-debug' );
 		}
 
 		/**

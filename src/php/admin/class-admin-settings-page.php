@@ -87,9 +87,9 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 		function show_invalid_log_notice() {
 			global $pagenow;
 			if (
-				'options-general.php' != $pagenow ||
+				('options-general.php' != $pagenow && 'tools.php' != $pagenow)||
 				! isset( $_GET['page'] ) ||
-				'wpmd_settings' != $_GET['page'] ||
+				( 'wpmd_settings' != $_GET['page'] && 'wpmd_log_file' != $_GET['page'] ) ||
 				$this->get_log_file()->is_log_file_valid()
 			) {
 				return;
@@ -358,13 +358,33 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 						'sanitize_callback' => 'sanitize_text_field'
 					),
 					array(
-						'name'              => 'redirect_to_last_page',
+						'name'              => 'ignore_last_line',
 						'tag'               => 'debug.log-setting',
-						'label'             => __( 'Redirect to Last Page', 'wp-marvelous-debug' ),
-						'desc'              => __( 'Enable', 'wp-marvelous-debug' ) . '<p class="description">' . sprintf( __( 'Displays the end of the log file by default on the <a href="%s">log file page</a>.', 'wp-marvelous-debug' ), admin_url( 'tools.php?page=wpmd_log_file' ) ) . '</p>',
+						'label'             => __( 'Ignore Last Line', 'wp-marvelous-debug' ),
+						'desc'              => __( 'Enable', 'wp-marvelous-debug' ) . '<p class="description">' . __( 'Ignore last line from log file as almost always it is an empty line.', 'wp-marvelous-debug' ) . '</p>',
 						//'placeholder'       => __( 'Text Input placeholder', 'wp-marvelous-debug' ),
 						'type'              => 'checkbox',
 						'default'           => 'on',
+						'sanitize_callback' => 'sanitize_text_field'
+					),
+					array(
+						'name'              => 'reverse_chronological_order',
+						'tag'               => 'debug.log-setting',
+						'label'             => __( 'Reverse Chronological Order', 'wp-marvelous-debug' ),
+						'desc'              => __( 'Enable', 'wp-marvelous-debug' ) . '<p class="description">' . __( 'Most recent first.', 'wp-marvelous-debug' ) . '</p>',
+						//'placeholder'       => __( 'Text Input placeholder', 'wp-marvelous-debug' ),
+						'type'              => 'checkbox',
+						'default'           => 'on',
+						'sanitize_callback' => 'sanitize_text_field'
+					),
+					array(
+						'name'              => 'redirect_to_last_page',
+						'tag'               => 'debug.log-setting',
+						'label'             => __( 'Redirect to Last Page', 'wp-marvelous-debug' ),
+						'desc'              => __( 'Enable', 'wp-marvelous-debug' ) . '<p class="description">' . __( 'Displays the end of the log file by default. Only makes sense when <strong>Reverse Chronological Order</strong> is disabled', 'wp-marvelous-debug' ) . '</p>',
+						//'placeholder'       => __( 'Text Input placeholder', 'wp-marvelous-debug' ),
+						'type'              => 'checkbox',
+						'default'           => 'off',
 						'sanitize_callback' => 'sanitize_text_field'
 					),
 					array(
