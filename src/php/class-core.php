@@ -49,8 +49,6 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Core' ) ) {
 			$this->handle_hooks();
 			add_filter( 'plugin_action_links_' . plugin_basename( $this->plugin_info['filesystem_path'] ), array( $this, 'add_action_links' ) );
 			add_action( 'init', array( $this, 'handle_localization' ) );
-			//add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-			//add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		}
 
 		/**
@@ -63,18 +61,6 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Core' ) ) {
 			$domain = $this->plugin_info['text_domain'];
 			load_plugin_textdomain( $domain, false, dirname( plugin_basename( $this->plugin_info['filesystem_path'] ) ) . trailingslashit( 'languages' ) );
 		}
-
-		/**
-		 * enqueue_scripts.
-		 *
-		 * @version 1.0.0
-		 * @since   1.0.0
-		 */
-		/*function enqueue_scripts() {
-			$suffix  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-			$version = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? uniqid() : '.min';
-			wp_enqueue_script( 'wpmd-js', $this->get_plugin_url() . 'assets/general' . $suffix . '.js', array(), $version, true );
-		}*/
 
 		/**
 		 * add_action_links.
