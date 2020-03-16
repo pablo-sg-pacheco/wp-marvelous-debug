@@ -118,13 +118,48 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Log_File' ) ) {
 			}
 			if (
 				( 'on' === ( $generate_on_admin = $this->get_options()->get_option( 'generate_reduced_log_on_admin', 'wpmd_log', 'on' ) ) && 'admin_init' === current_filter() ) ||
-				( 'on' === ( $generate_on_frontend = $this->get_options()->get_option( 'generate_reduced_log_on_frontend', 'wpmd_log', 'on' ) ) && 'wp_footer' === current_filter() )
+				( 'on' === ( $generate_on_frontend = $this->get_options()->get_option( 'generate_reduced_log_on_frontend', 'wpmd_log', 'off' ) ) && 'wp_footer' === current_filter() )
 			) {
 				\WP_Filesystem();
 				global $wp_filesystem;
 				$reduced_log_file = trailingslashit( $this->get_log_file_directory() ) . 'debug-reduced.log';
 				$wp_filesystem->put_contents( $reduced_log_file, $this->get_last_n_lines( $this->get_options()->get_option( 'last_x_log_lines', 'wpmd_log', 50 ) ) );
 			}
+		}
+
+		/**
+		 * search.
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @see https://stackoverflow.com/a/3686287/1193038
+		 *
+		 * @return array|bool
+		 */
+		function search(){
+			if ( ! $this->is_log_file_valid() ) {
+				return false;
+			}
+			$searchthis = "trying";
+			$matches = array();
+
+			$handle = @fopen($this->get_log_file(), "r");
+			if ($handle)
+			{
+				while (!feof($handle))
+				{
+					$buffer = fgets($handle);
+					if(strpos($buffer, $searchthis) !== FALSE)
+						$matches[] = $buffer;
+				}
+				fclose($handle);
+			}
+
+			//show results:
+			//print_r($matches);
+			//error_log(print_r($matches,true));
+			return $matches;
 		}
 
 		/**

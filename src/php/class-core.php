@@ -48,8 +48,20 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Core' ) ) {
 			$this->handle_dependency_injection();
 			$this->handle_hooks();
 			add_filter( 'plugin_action_links_' . plugin_basename( $this->plugin_info['filesystem_path'] ), array( $this, 'add_action_links' ) );
+			add_action( 'init', array( $this, 'handle_localization' ) );
 			//add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			//add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		}
+
+		/**
+		 * handle_localization.
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 */
+		function handle_localization(){
+			$domain = $this->plugin_info['text_domain'];
+			load_plugin_textdomain( $domain, false, dirname( plugin_basename( $this->plugin_info['filesystem_path'] ) ) . trailingslashit( 'languages' ) );
 		}
 
 		/**
@@ -158,6 +170,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Core' ) ) {
 			// Log File
 			$dich->add_action( 'wp_footer', array( Log_File::class, 'generate_reduced_log_file' ) );
 			$dich->add_action( 'admin_init', array( Log_File::class, 'generate_reduced_log_file' ) );
+			//$dich->add_action( 'admin_init', array( Log_File::class, 'search' ) );
 
 			// Activation and deactivation hooks
 			register_activation_hook( $this->plugin_info['filesystem_path'], function () {
@@ -166,6 +179,8 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Core' ) ) {
 			register_deactivation_hook( $this->plugin_info['filesystem_path'], function () {
 				do_action( 'wpmd_deactivation_hook' );
 			} );
+
+
 		}
 
 		/**

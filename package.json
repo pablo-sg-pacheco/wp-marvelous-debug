@@ -4,7 +4,7 @@
   "description": "View WordPress debug.log on your browser's console",
   "main": "index.js",
   "scripts": {
-    "pot": "wp-pot --src src/app/**/*.php --dest-file languages/wp-debug-console.pot --domain wp-debug-console",
+    "pot": "wp-pot --src src/php/**/*.php --dest-file languages/wp-marvelous-debug.pot --domain wp-marvelous-debug",
     "build": "webpack --mode=development --config webpack-config.js & webpack --mode=production --config webpack-config.js",
     "watch": "webpack --mode=development --watch --config webpack-config.js",
     "eslint": "eslint \"src/assets/**/*.{js,jsx}\" --quiet",

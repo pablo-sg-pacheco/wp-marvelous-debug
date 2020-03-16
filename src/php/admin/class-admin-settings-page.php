@@ -429,7 +429,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 						'label'             => __( 'Generate on Frontend', 'wp-marvelous-debug' ),
 						'desc'              => __( 'Enable', 'wp-marvelous-debug' ) . '<p class="description">' . __( 'Generates the reduced log file on the frontend.', 'wp-marvelous-debug' ) . '</p>',
 						'type'              => 'checkbox',
-						'default'           => 'on',
+						'default'           => 'off',
 						'sanitize_callback' => 'sanitize_text_field'
 					),
 				)
