@@ -160,6 +160,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Core' ) ) {
 			$dich->add_action( 'admin_menu', array( Admin_Settings_Page::class, 'admin_menu' ) );
 
 			// Tools Page
+			$dich->add_action( 'admin_head', array( Log_File_Tools_Page::class, 'handle_css' ) );
 			$dich->add_action( 'admin_menu', array( Log_File_Tools_Page::class, 'admin_menu' ) );
 			$dich->add_action( 'current_screen', array( Log_File_Tools_Page::class, 'redirect_to_last_page' ) );
 			if ( ! empty( $_GET['page'] ) && 'wpmd_log_file' === $_GET['page'] ) {

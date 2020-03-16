@@ -25,7 +25,9 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 		 */
 		private $log_file;
 
-		/** Class constructor */
+		/**
+		 * Log_List constructor.
+		 */
 		public function __construct() {
 
 			parent::__construct( [
@@ -38,6 +40,9 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 
 		/**
 		 * Returns the count of records in the database.
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
 		 *
 		 * @return null|string
 		 */
@@ -52,13 +57,38 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 			return $wpdb->get_var( $sql );*/
 		}
 
-		/** Text displayed when no customer data is available */
+		/**
+		 * Text displayed when no customer data is available.
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 */
 		public function no_items() {
 			_e( 'No lines avaliable.', 'wp-marvelous-debug' );
 		}
 
 		/**
+		 * get_table_classes.
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @return array
+		 */
+		protected function get_table_classes() {
+			$classes = parent::get_table_classes();
+			if ( ( $key = array_search( 'fixed', $classes ) ) !== false ) {
+				unset( $classes[ $key ] );
+			}
+			return $classes;
+		}
+
+		/**
 		 * Render a column when no column specific method exist.
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
 		 *
 		 * @param array $item
 		 * @param string $column_name
@@ -67,21 +97,32 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 		 */
 		public function column_default( $item, $column_name ) {
 			switch ( $column_name ) {
+				case 'line_number':
+					return $item['line'];
+					break;
+				case 'message':
+					return $item['message'];
+					break;
 				case 'date':
-					if(preg_match('/(?<=\[).*(?=\])/', $item, $output_array)){
+					if ( preg_match( '/(?<=\[).*(?=\])/', $item, $output_array ) ) {
 						return $output_array[0];
-					}else{
+					} else {
 						return '-';
 					}
+					break;
 				case 'type':
-					if(preg_match('/(?<=PHP\s).+(?=\:\s{2})/', $item, $output_array)){
+					if ( preg_match( '/(?<=PHP\s).+(?=\:\s{2})/', $item, $output_array ) ) {
 						return $output_array[0];
-					}else{
+					} else {
 						return '-';
 					}
+					break;
 				default:
 					return print_r( $item, true ); //Show the whole array for troubleshooting purposes
 			}
+			//return $item['message'];
+			//error_log(print_r($item,true));
+
 		}
 
 		/**
@@ -120,7 +161,10 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 
 
 		/**
-		 *  Associative array of columns
+		 *  Associative array of columns.
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
 		 *
 		 * @return array
 		 */
@@ -129,7 +173,9 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 				//'cb'      => '<input type="checkbox" />',
 				//'date'    => __( 'Date', 'wp-marvelous-debug' ),
 				//'type' => __( 'Type', 'wp-marvelous-debug' ),
-				'message'    => __( 'Message', 'wp-marvelous-debug' )
+				'message'    => __( 'Message', 'wp-marvelous-debug' ),
+				'line_number'=> __( 'Line', 'wp-marvelous-debug' ),
+
 			];
 
 			return $columns;
@@ -152,46 +198,28 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 
 		/**
 		 * Handles data query and filter, sorting, and pagination.
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
 		 */
 		public function prepare_items() {
-
-
 			if ( ! empty( $this->items ) ) {
 				return;
 			}
-
-
-
-			$columns = $this->get_columns();
-
-			//$this->_column_headers = $this->get_column_info();
+			$columns               = $this->get_columns();
 			$this->_column_headers = array(
-				$columns,		// columns
+				$columns,        // columns
 			);
-
-
 			$this->process_bulk_action();
-
-			$per_page     = $this->get_items_per_page( 'wpmd_lines_per_page', 10 );
+			$per_page     = $this->get_items_per_page( 'wpmd_lines_per_page', 15 );
 			$current_page = $this->get_pagenum();
 			$total_items  = $this->record_count();
-
 			$this->set_pagination_args( [
 				'total_items' => $total_items, //WE have to calculate the total number of items
 				'per_page'    => $per_page //WE have to determine how many items to show on a page
 			] );
-
-
 			$this->items = $this->get_log_file()->get_lines( $per_page, $current_page );
-
-			//$this->items = self::get_customers( $per_page, $current_page );
-
-			//error_log($per_page);
-			//error_log($current_page);
-
-			//$test = $this->get_log_file()->test();
-			//error_log(print_r($test,true));
-			//$this->items = array('a'=>'b','c'=>'d');
 		}
 
 		/**

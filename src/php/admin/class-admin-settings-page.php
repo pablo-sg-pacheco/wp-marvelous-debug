@@ -145,7 +145,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 		 * @since   1.0.0
 		 */
 		function admin_menu() {
-			add_options_page( __( 'WP Marvelous Debug', 'wp-marvelous-debug' ), __( 'WP Marvelous Debug', 'wp-marvelous-debug' ), 'delete_posts', 'wpmd_settings', array( $this, 'plugin_page' ) );
+			add_options_page( __( 'WP Marvelous Debug', 'wp-marvelous-debug' ), __( 'Debugging', 'wp-marvelous-debug' ), 'delete_posts', 'wpmd_settings', array( $this, 'plugin_page' ) );
 		}
 
 		/**
@@ -447,7 +447,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 		 */
 		function plugin_page() {
 			echo '<div class="wrap">';
-			echo '<h1>' . __( 'WP Marvelous Debug', 'remove-special-characters-from-permalinks' ) . '</h1>';
+			echo '<h1>' . __( 'Debugging Settings', 'remove-special-characters-from-permalinks' ) . '</h1>';
 			$this->settings_api->show_navigation();
 			$this->settings_api->show_forms();
 			echo '</div>';

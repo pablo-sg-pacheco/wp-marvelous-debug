@@ -51,6 +51,8 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_File_Tools_Page' ) ) {
 			wp_redirect( add_query_arg( array( 'paged' => $total_pages ), admin_url( 'tools.php?page=wpmd_log_file' ) ) );
 		}
 
+
+
 		/**
 		 * add_page_content.
 		 *
@@ -85,6 +87,39 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_File_Tools_Page' ) ) {
 		}
 
 		/**
+		 * handle_css.
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 */
+		function handle_css() {
+			global $pagenow;
+			if (
+				'tools.php' != $pagenow ||
+				! isset( $_GET['page'] ) ||
+				'wpmd_log_file' != $_GET['page']
+			) {
+				return;
+			}
+			?>
+			<style>
+				.column-line_number{
+					text-align:right !important;
+					white-space: nowrap;
+				}
+				td.column-line_number{
+					color: #000; /* Fallback for older browsers */
+					color: rgba(0, 0, 0, 0.4) !important;
+				}
+				.column-message{
+					width:100%;
+				}
+			</style>
+			<?php
+		}
+
+		/**
 		 * admin menu.
 		 *
 		 * @version 1.0.0
@@ -105,7 +140,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_File_Tools_Page' ) ) {
 			$option = 'per_page';
 			$args   = [
 				'label' => 'Lines per page',
-				'default' => 10,
+				'default' => 15,
 				'option' => 'wpmd_lines_per_page'
 			];
 			add_screen_option( $option, $args );

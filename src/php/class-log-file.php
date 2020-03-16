@@ -219,7 +219,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Log_File' ) ) {
 		 * @return bool|string
 		 */
 		function get_log_file( $test = false ) {
-			//$test = true;
+			$test = true;
 			if ( empty( $this->log_path ) ) {
 				if ( $log_path = $this->get_options()->get_option( 'log_file', 'wpmd_log', $this->get_default_log_file() ) ) {
 					$this->log_path = $log_path;
@@ -250,6 +250,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Log_File' ) ) {
 			$spl         = new \SplFileObject( $file );
 			$total_lines = $this->get_total_lines_amount();
 			$reverse_order = $this->get_options()->get_option( 'reverse_chronological_order', 'wpmd_log', 'on' );
+			$lines = array();
 			if ( 'on' === $reverse_order ) {
 				// Reverse Order
 				$initial_pos = ( $total_lines - 1 ) - ( $per_page * ( $current_page - 1 ) );
@@ -259,7 +260,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Log_File' ) ) {
 						break;
 					}
 					$spl->seek( $i );
-					$lines[] = $spl->current();
+					$lines[]=array('message' => $spl->current(),'line'=>$i+1);
 				}
 			} else {
 				// Normal Order
@@ -268,7 +269,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Log_File' ) ) {
 				$spl->seek( $line_pos );
 				$lines = array();
 				for ( $i = $line_pos; $i < $lines_max; $i ++ ) {
-					$lines[] = $spl->current();
+					$lines[]=array('message' => $spl->current(),'line'=>$i+1);
 					$spl->next();
 				}
 			}
