@@ -115,6 +115,9 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_File_Tools_Page' ) ) {
 				.column-message{
 					width:100%;
 				}
+				.wpmd-line-date{
+					/*color:red;*/
+				}
 			</style>
 			<?php
 		}

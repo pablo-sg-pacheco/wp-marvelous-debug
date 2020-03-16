@@ -101,6 +101,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 					return $item['line'];
 					break;
 				case 'message':
+					$item['message'] = apply_filters( 'wpmd_line_message', $item['message'] );
 					return $item['message'];
 					break;
 				case 'date':
@@ -138,6 +139,18 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 			);
 		}*/
 
+		/**
+		 * Method for message column
+		 *
+		 * @param array $item an array of DB data
+		 *
+		 * @return string
+		 */
+		function column_message( $item ) {
+			//$item['message'] = preg_replace('/(?<=\[).*(?=\])/', '<span class="wpmd-line-date">$0</span>', $item['message']);
+
+			return $item['message'];
+		}
 
 		/**
 		 * Method for name column

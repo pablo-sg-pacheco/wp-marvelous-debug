@@ -159,6 +159,9 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Core' ) ) {
 			$dich->add_action( 'admin_init', array( Admin_Settings_Page::class, 'admin_init' ) );
 			$dich->add_action( 'admin_menu', array( Admin_Settings_Page::class, 'admin_menu' ) );
 
+			// Log List
+			//$dich->add_filter( 'wpmd_line_message', array( Admin_Settings_Page::class, 'admin_menu' ) );
+
 			// Tools Page
 			$dich->add_action( 'admin_head', array( Log_File_Tools_Page::class, 'handle_css' ) );
 			$dich->add_action( 'admin_menu', array( Log_File_Tools_Page::class, 'admin_menu' ) );
