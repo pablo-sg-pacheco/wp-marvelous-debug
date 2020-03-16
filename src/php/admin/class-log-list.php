@@ -162,7 +162,12 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 
 
 
-			$this->_column_headers = $this->get_column_info();
+			$columns = $this->get_columns();
+
+			//$this->_column_headers = $this->get_column_info();
+			$this->_column_headers = array(
+				$columns,		// columns
+			);
 
 
 			$this->process_bulk_action();
