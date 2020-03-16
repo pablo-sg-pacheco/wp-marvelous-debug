@@ -238,14 +238,14 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 			$settings_fields = array(
 				'wpmd_general' => array(
 					array(
-						'name'  => 'wp_config_subsection',
-						'label' => __( 'WP Config Settings', 'wp-marvelous-debug' ),
-						'desc'  => __( 'WP Config settings.', 'wp-marvelous-debug' ),
+						'name'  => 'general_subsection',
+						'label' => __( 'General Settings', 'wp-marvelous-debug' ),
+						'desc'  => __( 'General settings.', 'wp-marvelous-debug' ),
 						'type'  => 'subsection'
 					),
 					array(
 						'name'              => 'wp_config_path',
-						'label'             => __( 'Path', 'wp-marvelous-debug' ),
+						'label'             => __( 'Wp Config Path', 'wp-marvelous-debug' ),
 						'desc'              => __( 'Path to your wp-config.php file.', 'wp-marvelous-debug' ) . ' ' . __( 'Probably ', 'wp-marvelous-debug' ) . '<code>' . $this->get_wp_config()->get_default_wp_config_path() . '</code>',
 						//'placeholder'       => __( 'Text Input placeholder', 'wp-marvelous-debug' ),
 						'type'              => 'text',
