@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WP Marvelous Debug
- * Description: View WordPress debug.log on your browser's console
+ * Description: Edit the debugging constants from wp-config, view the log file on the Dashboard and more debugging features
  * Version: 1.0.0
  * Author: Thanks to IT
  * Author URI: https://github.com/wp-marvelous-debug
