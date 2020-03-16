@@ -219,7 +219,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Log_File' ) ) {
 		 * @return bool|string
 		 */
 		function get_log_file( $test = false ) {
-			$test = true;
+			//$test = true;
 			if ( empty( $this->log_path ) ) {
 				if ( $log_path = $this->get_options()->get_option( 'log_file', 'wpmd_log', $this->get_default_log_file() ) ) {
 					$this->log_path = $log_path;
