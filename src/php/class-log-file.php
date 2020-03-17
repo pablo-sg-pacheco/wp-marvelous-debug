@@ -80,7 +80,6 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Log_File' ) ) {
 				return false;
 			}
 			$file = new \SplFileObject( $this->get_log_file(), 'r' );
-			$file->setFlags( \SplFileObject::READ_AHEAD | \SplFileObject::SKIP_EMPTY | \SplFileObject::DROP_NEW_LINE );
 			$file->seek( PHP_INT_MAX );
 			if ( 'on' === $this->get_options()->get_option( 'ignore_last_line', 'wpmd_log', 'on' ) ) {
 				return $file->key();
