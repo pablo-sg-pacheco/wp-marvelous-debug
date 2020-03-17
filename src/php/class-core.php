@@ -120,6 +120,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Core' ) ) {
 			$dic[ Log_List::class ] = $dic->service( function ( DIC $container ) {
 				$log_list = new Log_List();
 				$log_list->set_log_file( $container[ Log_File::class ] );
+				$log_list->set_options( $container[ Options::class ] );
 				return $log_list;
 			} );
 

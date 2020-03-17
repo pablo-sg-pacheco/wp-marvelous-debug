@@ -358,6 +358,15 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 						'sanitize_callback' => 'sanitize_text_field'
 					),
 					array(
+						'name'              => 'replace_space',
+						'tag'               => 'debug.log-setting',
+						'label'             => __( 'Replace Empty Space', 'wp-marvelous-debug' ),
+						'desc'              => __( 'Enable', 'wp-marvelous-debug' ) . '<p class="description">' . __( 'Replace empty spaces by &nbsp;', 'wp-marvelous-debug' ) . '</p>',
+						'type'              => 'checkbox',
+						'default'           => 'on',
+						'sanitize_callback' => 'sanitize_text_field'
+					),
+					array(
 						'name'              => 'ignore_last_line',
 						'tag'               => 'debug.log-setting',
 						'label'             => __( 'Ignore Last Line', 'wp-marvelous-debug' ),

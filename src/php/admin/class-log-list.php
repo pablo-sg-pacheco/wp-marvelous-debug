@@ -11,6 +11,7 @@ namespace ThanksToIT\WPMD\Admin;
 
 
 use ThanksToIT\WPMD\Log_File;
+use ThanksToIT\WPMD\Options;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -24,6 +25,11 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 		 * @var Log_File
 		 */
 		private $log_file;
+
+		/**
+		 * @var Options
+		 */
+		private $options;
 
 		/**
 		 * Log_List constructor.
@@ -140,7 +146,10 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 		}*/
 
 		/**
-		 * Method for message column
+		 * Method for message column.
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
 		 *
 		 * @param array $item an array of DB data
 		 *
@@ -149,7 +158,10 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 		function column_message( $item ) {
 			//$item['message'] = preg_replace('/(?<=\[).*(?=\])/', '<span class="wpmd-line-date">$0</span>', $item['message']);
 
-			return $item['message'];
+			if ( 'on' === $this->get_options()->get_option( 'replace_space', 'wpmd_log', 'on' ) ) {
+				$item['message'] = str_replace( " ", "&nbsp;", $item['message'] );
+			}
+			return esc_html( $item['message'] );
 		}
 
 		/**
@@ -259,8 +271,19 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 			$this->log_file = $log_file;
 		}
 
+		/**
+		 * @return Options
+		 */
+		public function get_options() {
+			return $this->options;
+		}
 
-
+		/**
+		 * @param Options $options
+		 */
+		public function set_options( $options ) {
+			$this->options = $options;
+		}
 
 	}
 }
