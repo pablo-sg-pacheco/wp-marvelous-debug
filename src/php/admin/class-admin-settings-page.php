@@ -361,7 +361,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 						'name'              => 'replace_space',
 						'tag'               => 'debug.log-setting',
 						'label'             => __( 'Replace Empty Space', 'wp-marvelous-debug' ),
-						'desc'              => __( 'Enable', 'wp-marvelous-debug' ) . '<p class="description">' . __( 'Replace empty spaces by &nbsp;', 'wp-marvelous-debug' ) . '</p>',
+						'desc'              => __( 'Enable', 'wp-marvelous-debug' ) . '<p class="description">' . __( 'Replace empty spaces by <code>&nbsp;</code>', 'wp-marvelous-debug' ) . '</p>',
 						'type'              => 'checkbox',
 						'default'           => 'on',
 						'sanitize_callback' => 'sanitize_text_field'
