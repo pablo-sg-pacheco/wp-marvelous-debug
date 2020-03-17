@@ -270,7 +270,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 						'name'  => 'wp_config_constants_subsection',
 						'tag'   => 'wp-config-constant',
 						'label' => __( 'WP Config Constants', 'wp-marvelous-debug' ),
-						'desc'  => sprintf( __( 'WP Config constants regarding <a href="%s" target="_blank">debugging</a>.', 'wp-marvelous-debug' ), 'https://wordpress.org/support/article/debugging-in-wordpress/' ) . '<br />' . __( 'It\'s necessary to enable at least the <strong>WP_DEBUG</strong> and <strong>WP_DEBUG_LOG</strong> constants to generate the log file.', 'wp-marvelous-debug' ),
+						'desc'  => sprintf( __( 'WP Config constants regarding <a href="%s" target="_blank">debugging</a>.', 'wp-marvelous-debug' ), 'https://wordpress.org/support/article/debugging-in-wordpress/' ) . '<br />' . sprintf( __( 'It\'s necessary to enable at least the <strong>WP_DEBUG</strong> and <strong>WP_DEBUG_LOG</strong> constants to generate the <a href="%s">log file</a>.', 'wp-marvelous-debug' ), admin_url( 'tools.php?page=wpmd_log_file' ) ),
 						'type'  => 'subsection'
 					),
 					array(
@@ -519,14 +519,6 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 				.wpmd-log-content textarea {
 					width: 99%;
 				}
-				/*.padding-v1 th{
-					padding-top:12px;
-					padding-bottom:12px;
-				}
-				.padding-v1 td{
-					padding-top:7px;
-					padding-bottom:7px;
-				}*/
 				.form-table th label{
 					display:inline-block;
 					vertical-align: top;
@@ -534,18 +526,6 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 				.invalid-input input[type="text"]{
 					border:1px solid red;
 				}
-				/*.wp_config_path th:after{
-					content: "\f147";
-					font-family: dashicons;
-					color:green;
-					font-size:35px;
-					display:inline-block;
-					vertical-align: top;
-					position:relative;
-					top:-15px;
-					font-weight:100;
-					margin: 0 3px -20px 0px;
-				}*/
 			</style>
 			<?php
 		}
