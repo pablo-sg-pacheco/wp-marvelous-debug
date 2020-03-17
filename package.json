@@ -1,7 +1,7 @@
 {
-  "name": "wp-debug-console",
+  "name": "wp-marvelous-debug",
   "version": "1.0.0",
-  "description": "View WordPress debug.log on your browser's console",
+  "description": "Edit the debugging constants from wp-config, view the log file on the Dashboard and more debugging features",
   "main": "index.js",
   "scripts": {
     "pot": "wp-pot --src src/php/**/*.php --dest-file languages/wp-marvelous-debug.pot --domain wp-marvelous-debug",
@@ -14,11 +14,10 @@
     "stylelint:fix": "stylelint \"src/assets/**/*.{css,scss}\" --fix"
   },
   "keywords": [
-    "referral",
-    "affiliate",
-    "referee",
-    "referrer",
-    "woocommerce"
+    "debug",
+    "debugging",
+    "wpconfig",
+    "wordpress",
   ],
   "stylelint": {
     "extends": "stylelint-config-wordpress"

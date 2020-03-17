@@ -1,7 +1,7 @@
 {
-  "name": "thanks-to-it/wp-debug-console",
+  "name": "thanks-to-it/wp-marvelous-debug",
   "type": "wordpress-plugin",
-  "description": "View WordPress debug.log on your browser's console",
+  "description": "Edit the debugging constants from wp-config, view the log file on the Dashboard and more debugging features",
   "keywords": [
     "wordpress",
     "debug",
