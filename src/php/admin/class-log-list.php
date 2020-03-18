@@ -158,10 +158,11 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 		function column_message( $item ) {
 			//$item['message'] = preg_replace('/(?<=\[).*(?=\])/', '<span class="wpmd-line-date">$0</span>', $item['message']);
 
-			if ( 'on' === $this->get_options()->get_option( 'replace_space', 'wpmd_log', 'on' ) ) {
-				$item['message'] = str_replace( " ", "&nbsp;", $item['message'] );
+			if ( 'on' === $this->get_options()->get_option( 'format_with_pre', 'wpmd_log', 'on' ) ) {
+				return '<pre class="wpmd-pre">' . wp_kses( htmlspecialchars($item['message']) , wp_kses_allowed_html( 'post' ) ) . '</pre>';
+			} else {
+				return wp_kses_post( $item['message'] );
 			}
-			return esc_html( $item['message'] );
 		}
 
 		/**
@@ -237,7 +238,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 				$columns,        // columns
 			);
 			$this->process_bulk_action();
-			$per_page     = $this->get_items_per_page( 'wpmd_lines_per_page', 15 );
+			$per_page     = $this->get_items_per_page( 'wpmd_lines_per_page', 30 );
 			$current_page = $this->get_pagenum();
 			$total_items  = $this->record_count();
 			$this->set_pagination_args( [

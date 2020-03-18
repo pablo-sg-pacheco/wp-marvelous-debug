@@ -173,7 +173,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Log_File' ) ) {
 		 *
 		 * @return string
 		 */
-		function get_last_n_lines( $lines_count = 10 ) {
+		function get_last_n_lines( $lines_count = 50 ) {
 			if ( ! $this->is_log_file_valid() ) {
 				return '';
 			}

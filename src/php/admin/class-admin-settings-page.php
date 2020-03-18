@@ -218,11 +218,11 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 			$sections = array(
 				array(
 					'id'    => 'wpmd_general',
-					'title' => __( 'General Settings', 'wp-marvelous-debug' )
+					'title' => __( 'General', 'wp-marvelous-debug' )
 				),
 				array(
 					'id'    => 'wpmd_log',
-					'title' => __( 'Log Settings', 'wp-marvelous-debug' )
+					'title' => __( 'Log', 'wp-marvelous-debug' )
 				),
 			);
 			return $sections;
@@ -358,10 +358,10 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 						'sanitize_callback' => 'sanitize_text_field'
 					),
 					array(
-						'name'              => 'replace_space',
+						'name'              => 'format_with_pre',
 						'tag'               => 'debug.log-setting',
-						'label'             => __( 'Replace Empty Space', 'wp-marvelous-debug' ),
-						'desc'              => __( 'Enable', 'wp-marvelous-debug' ) . '<p class="description">' . __( 'Replaces empty spaces by ', 'wp-marvelous-debug' ) . '<code>'.htmlspecialchars('&nbsp;').'</code>'.'</p>',
+						'label'             => __( 'Define Preformatted Text', 'wp-marvelous-debug' ),
+						'desc'              => __( 'Enable', 'wp-marvelous-debug' ) . '<p class="description">' . __( 'Formats log text with ', 'wp-marvelous-debug' ) . '<code>' . htmlspecialchars( '<pre>' ) . '</code>' . __( ' html tag preserving spaces and line breaks.', 'wp-marvelous-debug' ) . '</p>',
 						'type'              => 'checkbox',
 						'default'           => 'on',
 						'sanitize_callback' => 'sanitize_text_field'

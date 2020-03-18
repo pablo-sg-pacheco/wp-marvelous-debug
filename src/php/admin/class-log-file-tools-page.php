@@ -46,12 +46,20 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_File_Tools_Page' ) ) {
 			) {
 				return;
 			}
+			// Handle first page from any other page
+			/*if (
+				isset( $_SERVER['HTTP_REFERER'] ) &&
+				'tools.php' == basename( parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_PATH ) )
+			) {
+				parse_str( parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_QUERY ), $result );
+				if ( isset( $result['test'] ) ) {
+					return;
+				}
+			}*/
 			$this->get_log_list()->prepare_items();
 			$total_pages = $this->get_log_list()->get_pagination_arg( 'total_pages' );
-			wp_redirect( add_query_arg( array( 'paged' => $total_pages ), admin_url( 'tools.php?page=wpmd_log_file' ) ) );
+			wp_redirect( add_query_arg( array( 'paged' => $total_pages,'test'=>'true' ), admin_url( 'tools.php?page=wpmd_log_file' ) ) );
 		}
-
-
 
 		/**
 		 * add_page_content.
@@ -115,8 +123,26 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_File_Tools_Page' ) ) {
 				.column-message{
 					width:100%;
 				}
+				td.column-message, td.column-line_number{
+					padding-top:1px !important;
+					padding-bottom:1px !important;
+				}
 				.wpmd-line-date{
 					/*color:red;*/
+				}
+				td.column-line_number{
+					font-size:12px;
+					vertical-align: middle;
+				}
+				.wpmd-pre{
+					tab-size:2;
+					margin-top:0;
+					margin-bottom:0;
+					white-space: -moz-pre-wrap;
+					white-space: -o-pre-wrap;
+					white-space: pre-wrap;
+					word-wrap: break-word;
+					font-size:11px;
 				}
 			</style>
 			<?php
@@ -143,7 +169,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_File_Tools_Page' ) ) {
 			$option = 'per_page';
 			$args   = [
 				'label' => 'Lines per page',
-				'default' => 15,
+				'default' => 30,
 				'option' => 'wpmd_lines_per_page'
 			];
 			add_screen_option( $option, $args );
