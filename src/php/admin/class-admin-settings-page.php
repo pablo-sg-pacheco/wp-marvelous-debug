@@ -456,7 +456,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 		 */
 		function plugin_page() {
 			echo '<div class="wrap">';
-			echo '<h1>' . __( 'Debugging Settings', 'remove-special-characters-from-permalinks' ) . '</h1>';
+			echo '<h1>' . __( 'Debugging Settings', 'wp-marvelous-debug' ) . '</h1>';
 			$this->settings_api->show_navigation();
 			$this->settings_api->show_forms();
 			echo '</div>';
