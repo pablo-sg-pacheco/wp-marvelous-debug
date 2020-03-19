@@ -132,6 +132,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Log_File' ) ) {
 		 * @version 1.0.0
 		 * @since   1.0.0
 		 *
+		 * @see https://stackoverflow.com/questions/3686177/php-to-search-within-txt-file-and-echo-the-whole-line
 		 * @see https://stackoverflow.com/a/3686287/1193038
 		 *
 		 * @return array|bool
