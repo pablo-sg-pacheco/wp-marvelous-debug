@@ -16,6 +16,7 @@ This plugin allows viewing the log file (debug.log) on the Dashboard and editing
 
 The log file is loaded on the Dashboard using the `/SplFileObject class`, optimized for memory usage, and it will use a pagination to load only some lines from it.
 
+== WP Config Constants
 The `wp-config.php` constants that can be edited from the Dashboard are:
 * `WP_DEBUG`
 * `WP_DEBUG_LOG`

@@ -400,7 +400,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 						'name'              => 'generate_reduced_log',
 						'tag'               => 'debug.log-setting',
 						'label'             => __( 'Generate Reduced Log', 'wp-marvelous-debug' ),
-						'desc'              => __( 'Generates a reduced duplicated log file <strong>(debug-reduced.log)</strong> from the original log file on the same directory.', 'wp-marvelous-debug' ) . '<br />' . __( 'Remember to disable it when you are not debugging anymore.', 'wp-marvelous-debug' ),
+						'desc'              => __( 'Generates a reduced duplicate log file <strong>(debug-reduced.log)</strong> from the original log file on the same directory.', 'wp-marvelous-debug' ) . '<br />' . __( 'Remember to disable it when you are not debugging anymore.', 'wp-marvelous-debug' ),
 						'type'              => 'subsection'
 					),
 					array(
