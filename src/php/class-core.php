@@ -2,7 +2,7 @@
 /**
  * WP Marvelous Debug - Core
  *
- * @version 1.0.0
+ * @version 1.0.2
  * @since   1.0.0
  * @author  Thanks to IT
  */
@@ -132,7 +132,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Core' ) ) {
 		/**
 		 * handle_hooks.
 		 *
-		 * @version 1.0.0
+		 * @version 1.0.2
 		 * @since   1.0.0
 		 */
 		function handle_hooks() {
@@ -150,6 +150,8 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Core' ) ) {
 			//$dich->add_filter( 'wpmd_line_message', array( Admin_Settings_Page::class, 'admin_menu' ) );
 
 			// Tools Page
+			$dich->add_action( 'admin_menu', array( Log_File_Tools_Page::class, 'erase_log_content' ) );
+			$dich->add_action( 'admin_notices', array( Log_File_Tools_Page::class, 'show_erase_log_notice' ), 10 );
 			$dich->add_action( 'admin_head', array( Log_File_Tools_Page::class, 'handle_css' ) );
 			$dich->add_action( 'admin_menu', array( Log_File_Tools_Page::class, 'admin_menu' ) );
 			$dich->add_action( 'current_screen', array( Log_File_Tools_Page::class, 'redirect_to_last_page' ) );
@@ -170,8 +172,6 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Core' ) ) {
 			register_deactivation_hook( $this->plugin_info['filesystem_path'], function () {
 				do_action( 'wpmd_deactivation_hook' );
 			} );
-
-
 		}
 
 		/**

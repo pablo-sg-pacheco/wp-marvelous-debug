@@ -2,7 +2,7 @@
 /**
  * WP Marvelous Debug - Log File Tools Page
  *
- * @version 1.0.0
+ * @version 1.0.2
  * @since   1.0.0
  * @author  Thanks to IT
  */
@@ -62,18 +62,54 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_File_Tools_Page' ) ) {
 		}
 
 		/**
+		 * erase_log_content.
+		 *
+		 * @version 1.0.2
+		 * @since   1.0.2
+		 */
+		function erase_log_content() {
+			if ( ! isset( $_POST['wpmd_log_nonce'] ) || ! wp_verify_nonce( $_POST['wpmd_log_nonce'], 'erase_log_content' ) ) {
+				return;
+			}
+			$this->get_log_file()->erase_log_content();
+		}
+
+		/**
+		 * show_erase_log_notice.
+		 *
+		 * @version 1.0.2
+		 * @since   1.0.2
+		 */
+		function show_erase_log_notice() {
+			if (
+				! $this->get_log_file()->is_log_file_valid() ||
+				! isset( $_POST['wpmd_log_nonce'] ) ||
+				! wp_verify_nonce( $_POST['wpmd_log_nonce'], 'erase_log_content' )
+			) {
+				return;
+			}
+
+			$class   = 'notice notice-success is-dismissible';
+			$message = __( 'Log file erased successfully.', 'wp-marvelous-debug' );
+			printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), $message );
+		}
+
+		/**
 		 * add_page_content.
 		 *
-		 * @version 1.0.0
+		 * @version 1.0.2
 		 * @since   1.0.0
 		 */
 		function add_page_content() {
 			?>
 			<div class="wrap">
-				<h1><?php echo __( 'Log File', 'remove-special-characters-from-permalinks' ) ?></h1>
+				<h1 class="wp-heading-inline"><?php echo __( 'Log File', 'wp-marvelous-debug' ) ?><a style="margin-left:8px" onclick="jQuery('#wpmd_erase_log_content_form').submit();" href="javascript:void(0)" class="page-title-action"><?php echo __( 'Erase Log Content', 'wp-marvelous-debug' ); ?></a></h1>
+				<form method="post" class="" id="wpmd_erase_log_content_form">
+					<?php wp_nonce_field( 'erase_log_content', 'wpmd_log_nonce' ); ?>
+				</form>
 				<?php if ( $this->get_log_file()->is_log_file_valid() ) : ?>
 					<p>
-						<?php echo __( 'Displaying ', 'remove-special-characters-from-permalinks' ) . '<code>' . $this->get_log_file()->get_log_file() . '</code>'; ?>
+						<?php echo __( 'Displaying ', 'wp-marvelous-debug' ) . '<code>' . $this->get_log_file()->get_log_file() . '</code>'; ?>
 					</p>
 				<?php endif; ?>
 				<div id="poststuff">

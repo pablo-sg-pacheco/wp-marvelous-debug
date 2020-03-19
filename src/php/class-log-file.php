@@ -48,6 +48,24 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Log_File' ) ) {
 		}
 
 		/**
+		 * erase_log_file_content.
+		 *
+		 * @version 1.0.2
+		 * @since   1.0.2
+		 *
+		 * @return bool
+		 */
+		function erase_log_content() {
+			if ( ! $this->is_log_file_valid() ) {
+				return false;
+			}
+			\WP_Filesystem();
+			global $wp_filesystem;
+			$log_file = $this->get_log_file();
+			$wp_filesystem->put_contents( $log_file, '' );
+		}
+
+		/**
 		 * get_filesize.
 		 *
 		 * @version 1.0.0

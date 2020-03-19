@@ -39,6 +39,9 @@ It's possible to generate a reduced duplicate log file (debug-reduced.log) from 
 
 == Changelog ==
 
+= 1.0.2 - 19/03/2020 =
+* Add 'Erase Log Content' button
+
 = 1.0.1 - 18/03/2020 =
 * Improve readme
 * Add banner and screenshots
@@ -48,4 +51,5 @@ It's possible to generate a reduced duplicate log file (debug-reduced.log) from 
 
 == Upgrade Notice ==
 
-= 1.0.0 =
+= 1.0.2 =
+* Add 'Erase Log Content' button

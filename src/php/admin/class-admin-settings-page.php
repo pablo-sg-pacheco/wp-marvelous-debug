@@ -245,7 +245,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Admin_Settings_Page' ) ) {
 					),
 					array(
 						'name'              => 'wp_config_path',
-						'label'             => __( 'Wp Config Path', 'wp-marvelous-debug' ),
+						'label'             => __( 'WP Config Path', 'wp-marvelous-debug' ),
 						'desc'              => __( 'Path to your wp-config.php file.', 'wp-marvelous-debug' ) . ' ' . __( 'Probably ', 'wp-marvelous-debug' ) . '<code>' . $this->get_wp_config()->get_default_wp_config_path() . '</code>',
 						//'placeholder'       => __( 'Text Input placeholder', 'wp-marvelous-debug' ),
 						'type'              => 'text',
