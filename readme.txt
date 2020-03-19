@@ -3,7 +3,7 @@ Contributors: karzin
 Tags: debug,debugging,wpconfig,log
 Requires at least: 4.4
 Tested up to: 5.3
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Requires PHP: 7.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -32,6 +32,10 @@ It's also possible to generate a reduced duplicated log file (debug-reduced.log)
 3. Start by visiting plugin settings at Settings > Debugging.
 
 == Changelog ==
+
+= 1.0.1 - 18/03/2020 =
+* Improve readme
+* Add banner and screenshots
 
 = 1.0.0 - 16/03/2020 =
 * Initial Release.

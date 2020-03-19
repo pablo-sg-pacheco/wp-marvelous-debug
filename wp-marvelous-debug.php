@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WP Marvelous Debug
  * Description: Edit the debugging constants from wp-config, view the log file on the Dashboard and more debugging features
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Pablo Pacheco
  * Author URI: https://profiles.wordpress.org/karzin/
  * License: GNU General Public License v3.0
