@@ -3,8 +3,8 @@
  * Plugin Name: WP Marvelous Debug
  * Description: Edit the debugging constants from wp-config, view the log file on the Dashboard and more debugging features
  * Version: 1.0.0
- * Author: WP Marvelous
- * Author URI: https://github.com/wp-marvelous
+ * Author: Pablo Pacheco
+ * Author URI: https://profiles.wordpress.org/karzin/
  * License: GNU General Public License v3.0
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: wp-marvelous-debug
