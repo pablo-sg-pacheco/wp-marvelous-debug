@@ -14,13 +14,13 @@ Edit the debugging constants from wp-config, view the log file on the Dashboard 
 
 This plugin allows viewing the log file (debug.log) on the Dashboard and editing the debugging constants from `wp-config.php`. It also provides other debugging oriented features.
 
-The log file is loaded on the Dashboard using the `/SplFileObject class`, optimized for memory usage, and it will use a pagination to load only some lines from it.
+The log file is loaded on the Dashboard **(Tools > Log File)** using the [/SplFileObject](https://www.php.net/manual/pt_BR/class.splfileobject.php) class, optimized for memory usage, and it will use a pagination in order to load only some lines from it.
 
 The plugin will try to enable `WP_DEBUG` and `WP_DEBUG_LOG` to true and disable `WP_DEBUG_DISPLAY` on its first run and will try to do the opposite when it's deactivated.
 You can change this behaviour if you want in the settings.
 
-= WP Config Constants =
-The `wp-config.php` constants that can be edited from the Dashboard are:
+== WP Config Constants ==
+The `wp-config.php` is being edited using [wp-cli/wp-config-transformer](https://github.com/wp-cli/wp-config-transformer) library, and these are the edited constants:
 
 * `WP_DEBUG`
 * `WP_DEBUG_LOG`
@@ -28,8 +28,8 @@ The `wp-config.php` constants that can be edited from the Dashboard are:
 * `SCRIPT_DEBUG`
 * `SAVEQUERIES`
 
-= Generate a reduced log file =
-It's possible to generate a reduced duplicate log file (debug-reduced.log) from the original one loading only the last files from it. Something like the tail command from Linux.
+== Generate a reduced log file ==
+It's possible to generate a reduced duplicate log file (debug-reduced.log) from the original one loading only the last lines from it (something like the tail command from Linux).
 
 == Installation ==
 
