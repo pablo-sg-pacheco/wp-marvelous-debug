@@ -2,7 +2,7 @@
 /**
  * WP Marvelous Debug - WP_Config
  *
- * @version 1.0.0
+ * @version 1.1.0
  * @since   1.0.0
  * @author  Thanks to IT
  */
@@ -26,13 +26,13 @@ if ( ! class_exists( 'ThanksToIT\WPMD\WP_Config' ) ) {
 		/**
 		 * get_default_wp_config_path.
 		 *
-		 * @version 1.0.0
+		 * @version 1.1.0
 		 * @since   1.0.0
 		 *
 		 * @return string
 		 */
 		function get_default_wp_config_path() {
-			return ABSPATH;
+			return trailingslashit( ABSPATH ) . 'wp-config.php';
 		}
 
 		/**
@@ -72,13 +72,31 @@ if ( ! class_exists( 'ThanksToIT\WPMD\WP_Config' ) ) {
 		/**
 		 * get_wp_config_file.
 		 *
-		 * @version 1.0.0
+		 * @version 1.1.0
 		 * @since   1.0.0
 		 *
 		 * @return string
 		 */
 		function get_wp_config_file() {
-			return trailingslashit( $this->get_options()->get_option( 'wp_config_path', 'wpmd_general', $this->get_default_wp_config_path() ) ) . 'wp-config.php';
+			return $this->get_options()->get_option( 'wp_config_file', 'wpmd_general', $this->get_default_wp_config_path() );
+			//return trailingslashit( $this->get_options()->get_option( 'wp_config_file', 'wpmd_general', $this->get_default_wp_config_path() ) ) . 'wp-config.php';
+		}
+
+		/**
+		 * is_wp_config_file_name_valid.
+		 *
+		 * @version 1.1.0
+		 * @since   1.1.0
+		 *
+		 * @return bool
+		 */
+		private function is_wp_config_file_name_valid() {
+			$file          = $this->get_wp_config_file();
+			$log_file_only = basename( parse_url( $file, PHP_URL_PATH ) );
+			if ( $log_file_only != 'wp-config.php' ) {
+				return false;
+			}
+			return true;
 		}
 
 		/**
@@ -94,6 +112,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\WP_Config' ) ) {
 			global $wp_filesystem;
 			if (
 				$wp_filesystem &&
+				$this->is_wp_config_file_name_valid() &&
 				$wp_filesystem->exists( $this->get_wp_config_file() )
 			) {
 				return true;
@@ -163,7 +182,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\WP_Config' ) ) {
 		/**
 		 * update_variable.
 		 *
-		 * @version 1.0.0
+		 * @version 1.1.0
 		 * @since   1.0.0
 		 *
 		 * @param $var_name
@@ -177,10 +196,16 @@ if ( ! class_exists( 'ThanksToIT\WPMD\WP_Config' ) ) {
 				return false;
 			}
 			$config_transformer = new \WPConfigTransformer( $this->get_wp_config_file() );
-			return $config_transformer->update( 'constant', $var_name, $this->maybe_bool_to_string( $value ), $config_args = [
-				'raw'       => true,
-				'normalize' => true,
-			] );
+			$response           = false;
+			try {
+				$response = $config_transformer->update( 'constant', $var_name, $this->maybe_bool_to_string( $value ), $config_args = [
+					'raw'       => true,
+					'normalize' => true,
+				] );
+			} catch ( \Exception $e ) {
+				$response = false;
+			}
+			return $response;
 		}
 
 		/**

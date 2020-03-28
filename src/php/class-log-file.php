@@ -315,14 +315,14 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Log_File' ) ) {
 		}
 
 		/**
-		 * is_log_path_valid.
+		 * log_file_exists.
 		 *
-		 * @version 1.0.0
-		 * @since   1.0.0
+		 * @version 1.1.0
+		 * @since   1.1.0
 		 *
 		 * @return bool
 		 */
-		function is_log_file_valid() {
+		function log_file_exists() {
 			if ( ! function_exists( 'WP_Filesystem' ) ) {
 				require_once( ABSPATH . 'wp-admin/includes/file.php' );
 			}
@@ -330,11 +330,37 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Log_File' ) ) {
 			global $wp_filesystem;
 			if (
 				$wp_filesystem &&
-				$wp_filesystem->exists( $this->get_log_file() ) &&
+				$wp_filesystem->exists( $this->get_log_file() )
+			) {
+				return true;
+			}
+			return false;
+		}
+
+		/**
+		 * is_log_path_valid.
+		 *
+		 * @version 1.0.0
+		 * @since   1.0.0
+		 *
+		 * @return bool
+		 */
+		function is_log_file_valid( $check_existence = true ) {
+			if ( ! function_exists( 'WP_Filesystem' ) ) {
+				require_once( ABSPATH . 'wp-admin/includes/file.php' );
+			}
+			WP_Filesystem();
+			global $wp_filesystem;
+			if (
+				$wp_filesystem &&
 				( $pathinfo = pathinfo( $this->get_log_file() ) ) &&
 				( 'txt' === $pathinfo['extension'] || 'log' === $pathinfo['extension'] )
 			) {
-				return true;
+				if ( $check_existence && $this->log_file_exists() ) {
+					return true;
+				} elseif ( ! $check_existence ) {
+					return true;
+				}
 			}
 			return false;
 		}

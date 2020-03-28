@@ -110,6 +110,7 @@ return array(
     'ThanksToIT\\WPMD\\Admin\\Log_List' => $baseDir . '/src/php/admin/class-log-list.php',
     'ThanksToIT\\WPMD\\Core' => $baseDir . '/src/php/class-core.php',
     'ThanksToIT\\WPMD\\Log_File' => $baseDir . '/src/php/class-log-file.php',
+    'ThanksToIT\\WPMD\\Log_Style' => $baseDir . '/src/php/class-log-style.php',
     'ThanksToIT\\WPMD\\Options' => $baseDir . '/src/php/class-options.php',
     'ThanksToIT\\WPMD\\WP_Config' => $baseDir . '/src/php/class-wp-config.php',
     'ThanksToIT\\WP_Settings_API\\Settings_API' => $vendorDir . '/thanks-to-it/wp-settings-api/src/class-settings-api.php',

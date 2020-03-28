@@ -3,7 +3,7 @@ Contributors: karzin
 Tags: debug,debugging,wpconfig,log
 Requires at least: 4.4
 Tested up to: 5.3
-Stable tag: 1.0.2
+Stable tag: 1.1.0
 Requires PHP: 7.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -39,6 +39,11 @@ It's possible to generate a reduced duplicate log file (debug-reduced.log) from 
 
 == Changelog ==
 
+= 1.1.0 - 27/03/2020 =
+* Add Try catch on `WPConfigTransformer` class
+* Add Log Styling options
+* Replace WP Config path by file
+
 = 1.0.2 - 19/03/2020 =
 * Add 'Erase Log Content' button
 
@@ -51,5 +56,7 @@ It's possible to generate a reduced duplicate log file (debug-reduced.log) from 
 
 == Upgrade Notice ==
 
-= 1.0.2 =
-* Add 'Erase Log Content' button
+= 1.1.0 =
+* Add Try catch on `WPConfigTransformer` class
+* Add Log Styling options
+* Replace WP Config path by file

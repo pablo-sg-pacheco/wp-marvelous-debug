@@ -11,6 +11,7 @@ namespace ThanksToIT\WPMD\Admin;
 
 
 use ThanksToIT\WPMD\Log_File;
+use ThanksToIT\WPMD\Log_Style;
 use ThanksToIT\WPMD\Options;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -30,6 +31,8 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 		 * @var Options
 		 */
 		private $options;
+
+
 
 		/**
 		 * Log_List constructor.
@@ -106,10 +109,10 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 				case 'line_number':
 					return $item['line'];
 					break;
-				case 'message':
+				/*case 'message':
 					$item['message'] = apply_filters( 'wpmd_line_message', $item['message'] );
 					return $item['message'];
-					break;
+					break;*/
 				case 'date':
 					if ( preg_match( '/(?<=\[).*(?=\])/', $item, $output_array ) ) {
 						return $output_array[0];
@@ -131,6 +134,8 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 			//error_log(print_r($item,true));
 
 		}
+
+
 
 		/**
 		 * Render the bulk edit checkbox
@@ -157,12 +162,16 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 		 */
 		function column_message( $item ) {
 			//$item['message'] = preg_replace('/(?<=\[).*(?=\])/', '<span class="wpmd-line-date">$0</span>', $item['message']);
-
+			$message = apply_filters( 'wpmd_pre_format_message', esc_html($item['message']) );
 			if ( 'on' === $this->get_options()->get_option( 'format_with_pre', 'wpmd_log', 'on' ) ) {
-				return '<pre class="wpmd-pre">' . wp_kses( htmlspecialchars($item['message']) , wp_kses_allowed_html( 'post' ) ) . '</pre>';
+				//return '<pre class="wpmd-pre">' . wp_kses( htmlspecialchars($item['message']) , wp_kses_allowed_html( 'post' ) ) . '</pre>';
+				$message = '<pre class="wpmd-pre">' . $message . '</pre>';
 			} else {
-				return wp_kses_post( $item['message'] );
+				$message = $message;
+				//return wp_kses_post( $item['message'] );
 			}
+
+			return apply_filters( 'wpmd_line_message', $message );
 		}
 
 		/**
@@ -285,6 +294,9 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_List' ) ) {
 		public function set_options( $options ) {
 			$this->options = $options;
 		}
+
+
+
 
 	}
 }

@@ -137,6 +137,7 @@ class ComposerStaticInitfd89ed1109dd1667a8b84893faf2c100
         'ThanksToIT\\WPMD\\Admin\\Log_List' => __DIR__ . '/../..' . '/src/php/admin/class-log-list.php',
         'ThanksToIT\\WPMD\\Core' => __DIR__ . '/../..' . '/src/php/class-core.php',
         'ThanksToIT\\WPMD\\Log_File' => __DIR__ . '/../..' . '/src/php/class-log-file.php',
+        'ThanksToIT\\WPMD\\Log_Style' => __DIR__ . '/../..' . '/src/php/class-log-style.php',
         'ThanksToIT\\WPMD\\Options' => __DIR__ . '/../..' . '/src/php/class-options.php',
         'ThanksToIT\\WPMD\\WP_Config' => __DIR__ . '/../..' . '/src/php/class-wp-config.php',
         'ThanksToIT\\WP_Settings_API\\Settings_API' => __DIR__ . '/..' . '/thanks-to-it/wp-settings-api/src/class-settings-api.php',

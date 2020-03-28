@@ -11,6 +11,7 @@ namespace ThanksToIT\WPMD\Admin;
 
 
 use ThanksToIT\WPMD\Log_File;
+use ThanksToIT\WPMD\Log_Style;
 use ThanksToIT\WPMD\Options;
 
 if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_File_Tools_Page' ) ) {
@@ -30,6 +31,11 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_File_Tools_Page' ) ) {
 		 * @var Options
 		 */
 		private $options;
+
+		/**
+		 * @var Log_Style
+		 */
+		private $log_style;
 
 		/**
 		 * redirect_to_last_page.
@@ -58,7 +64,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_File_Tools_Page' ) ) {
 			}*/
 			$this->get_log_list()->prepare_items();
 			$total_pages = $this->get_log_list()->get_pagination_arg( 'total_pages' );
-			wp_redirect( add_query_arg( array( 'paged' => $total_pages,'test'=>'true' ), admin_url( 'tools.php?page=wpmd_log_file' ) ) );
+			wp_redirect( add_query_arg( array( 'paged' => $total_pages,'redirect'=>'true' ), admin_url( 'tools.php?page=wpmd_log_file' ) ) );
 		}
 
 		/**
@@ -182,6 +188,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_File_Tools_Page' ) ) {
 				}
 			</style>
 			<?php
+			echo $this->get_log_style()->get_log_style();
 		}
 
 		/**
@@ -283,6 +290,19 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Admin\Log_File_Tools_Page' ) ) {
 			$this->options = $options;
 		}
 
+		/**
+		 * @return Log_Style
+		 */
+		public function get_log_style() {
+			return $this->log_style;
+		}
+
+		/**
+		 * @param Log_Style $log_style
+		 */
+		public function set_log_style( $log_style ) {
+			$this->log_style = $log_style;
+		}
 
 
 	}

@@ -114,6 +114,7 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Core' ) ) {
 				$tools_page = new Log_File_Tools_Page();
 				$tools_page->set_log_file( $container[ Log_File::class ] );
 				$tools_page->set_log_list( $container[ Log_List::class ] );
+				$tools_page->set_log_style( $container[ Log_Style::class ] );
 				$tools_page->set_options( $container[ Options::class ] );
 				return $tools_page;
 			} );
@@ -122,6 +123,11 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Core' ) ) {
 				$log_list->set_log_file( $container[ Log_File::class ] );
 				$log_list->set_options( $container[ Options::class ] );
 				return $log_list;
+			} );
+			$dic[ Log_Style::class ] = $dic->service( function ( DIC $container ) {
+				$log_style = new Log_Style();
+				$log_style->set_options( $container[ Options::class ] );
+				return $log_style;
 			} );
 
 			// DICH
@@ -146,8 +152,8 @@ if ( ! class_exists( 'ThanksToIT\WPMD\Core' ) ) {
 			$dich->add_action( 'admin_init', array( Admin_Settings_Page::class, 'admin_init' ) );
 			$dich->add_action( 'admin_menu', array( Admin_Settings_Page::class, 'admin_menu' ) );
 
-			// Log List
-			//$dich->add_filter( 'wpmd_line_message', array( Admin_Settings_Page::class, 'admin_menu' ) );
+			// Log Style
+			$dich->add_filter( 'wpmd_pre_format_message', array( Log_Style::class, 'detect_log_styling_parts' ),10 );
 
 			// Tools Page
 			$dich->add_action( 'admin_menu', array( Log_File_Tools_Page::class, 'erase_log_content' ) );
